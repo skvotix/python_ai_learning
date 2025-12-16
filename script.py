@@ -1,22 +1,33 @@
-class ClassPresentator:
-    def __init__(self, cls):
-        self.__cls = cls
-
-    def __call__(self, *args, **kwargs):
-        print(f"Created object of class {self.__cls.__name__} with args {args}, kwargs {kwargs}")
-        return self.__cls(*args, **kwargs)
-
-
-@ClassPresentator
-class Car:
-    def __init__(self, model, year):
-        self.model = model
-        self.year = year
-
-    def __call__(self):
-        print("Hey!")
+class FRange:
+    def __init__(self, start = 0.0, stop = 0.0, step = 1.0):
+        self.start = start
+        self.stop = stop
+        self.step = step
+        self.__value = self.start - self.step
 
 
+    def __iter__(self):
+        self.__value = self.start - self.step
+        return self
 
-toyota = Car("Toyota", 1999)
-toyota()
+    def __next__(self):
+        if self.__value + self.step < self.stop:
+            self.__value += self.step
+            return self.__value
+        else:
+            raise StopIteration
+
+fr = FRange(0, 2, 0.5)
+
+it = iter(fr)
+print(next(it))
+print(next(it))
+print(next(it))
+print(next(it))
+
+it = iter(fr)
+
+print(next(it))
+print(next(it))
+print(next(it))
+print(next(it))
